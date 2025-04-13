@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Personal Dashboard</h1>
+
+    <section class="section notes-memo" id="notes">
+        <h2>Memo</h2>
+        <form id="note-form">
+          <input type="text" id="note-input" placeholder="Tulis memo baru..." required />
+          <button>Tambah</button>
+        </form>
+        <div class="memo-grid" id="note-list"></div>
+      </section>
+      
+
+    <div class="main-grid">
+      <div class="left-sections">
+        <!-- JADWAL -->
+        <section class="section" id="schedule">
+          <h2>Jadwal Kuliah</h2>
+          <form id="schedule-form">
+            <input type="text" id="schedule-input" placeholder="Contoh: Kamis - Pemrograman Web 07:00" required />
+            <button>Tambah</button>
+          </form>
+          <ul id="schedule-list"></ul>
+        </section>
+
+        <!-- TUGAS -->
+        <section class="section" id="tasks">
+          <h2>Daftar Tugas</h2>
+          <form id="task-form">
+            <input type="text" id="task-input" placeholder="Contoh: Tugas PEMWEB - DL = 13 April 2025" required />
+            <button>Tambah</button>
+          </form>
+          <ul id="task-list"></ul>
+        </section>
+      </div>
+
+      <!-- TO-DO (SIDEBAR) -->
+      <aside class="section sidebar" id="todos">
+        <h2>To-Do List</h2>
+        <form id="todo-form">
+          <input type="text" id="todo-input" placeholder="Contoh: Belajar ES6+" required />
+          <button>Tambah</button>
+        </form>
+        <ul id="todo-list"></ul>
+      </aside>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
