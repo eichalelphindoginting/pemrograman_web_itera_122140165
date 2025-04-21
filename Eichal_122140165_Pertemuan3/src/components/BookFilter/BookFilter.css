@@ -1,0 +1,12 @@
+.book-filter {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .book-filter input,
+  .book-filter select {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  

@@ -1,0 +1,154 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin: 0;
+    color: #fff;
+    padding: 20px;
+}
+
+/* Container Styles */
+.container, .todo-container, .event-demo, .form-container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    width: 320px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Heading */
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Input Styles */
+input {
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Button Styles */
+button {
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background: #ff7eb3;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+    margin-top: 5px;
+}
+
+button:hover {
+    background: #ff5277;
+}
+
+/* To-Do List */
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+button.complete {
+    background: #28a745;
+}
+
+button.delete {
+    background: #dc3545;
+}
+
+/* Kalkulator */
+.event-demo input {
+    width: calc(50% - 5px);
+}
+
+.event-demo button {
+    width: 48%;
+    margin: 2px;
+}
+
+/* Flexbox */
+.flex {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Hasil Kalkulator */
+#hasil-kalkulator {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Form Validasi */
+.form-container {
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+/* Pesan Error */
+.error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Pesan Sukses */
+.success-message {
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+}

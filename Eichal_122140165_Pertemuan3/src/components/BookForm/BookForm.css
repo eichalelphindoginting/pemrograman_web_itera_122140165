@@ -1,0 +1,19 @@
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .book-form input,
+  .book-form select,
+  .book-form button {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .book-form .error {
+    color: red;
+    font-size: 0.9rem;
+  }
+  
