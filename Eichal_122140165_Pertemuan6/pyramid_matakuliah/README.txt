@@ -1,4 +1,4 @@
-Pyramid_Matakuliah
+pyramid_matakuliah
 ==================
 
 Getting Started

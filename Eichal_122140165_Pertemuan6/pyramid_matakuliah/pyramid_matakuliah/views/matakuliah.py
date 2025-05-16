@@ -1,43 +1,98 @@
 from pyramid.view import view_config
-from pyramid.response import Response
-import json
+from pyramid.httpexceptions import (
+    HTTPFound,
+    HTTPNotFound,
+    HTTPBadRequest,
+)
+from ..models import MataKuliah
 
-@view_config(route_name='get_matkul', renderer='json', request_method='GET')
-def get_matkul(request):
-    id = request.matchdict.get('id')
-    matkul = request.dbsession.query(Matakuliah).get(id)
-    if not matkul:
-        return Response(json_body={'error': 'Not found'}, status=404)
-    return matkul.to_dict()
 
-@view_config(route_name='list_matkul', renderer='json', request_method='GET')
-def list_matkul(request):
-    matkuls = request.dbsession.query(Matakuliah).all()
-    return [m.to_dict() for m in matkuls]
+@view_config(route_name='matakuliah_list', renderer='json')
+def matakuliah_list(request):
+    """View untuk menampilkan daftar matakuliah"""
+    dbsession = request.dbsession
+    matakuliahs = dbsession.query(MataKuliah).all()
+    return {'matakuliahs': [m.to_dict() for m in matakuliahs]}
 
-@view_config(route_name='create_matkul', renderer='json', request_method='POST')
-def create_matkul(request):
-    data = request.json_body
-    matkul = Matakuliah(**data)
-    request.dbsession.add(matkul)
-    return Response(json_body={'status': 'created'}, status=201)
 
-@view_config(route_name='update_matkul', renderer='json', request_method='PUT')
-def update_matkul(request):
-    id = request.matchdict.get('id')
-    matkul = request.dbsession.query(Matakuliah).get(id)
-    if not matkul:
-        return Response(json_body={'error': 'Not found'}, status=404)
-    data = request.json_body
-    for key, value in data.items():
-        setattr(matkul, key, value)
-    return {'status': 'updated'}
+@view_config(route_name='matakuliah_detail', renderer='json')
+def matakuliah_detail(request):
+    """View untuk melihat detail satu matakuliah"""
+    dbsession = request.dbsession
+    matakuliah_id = request.matchdict['id']
+    matakuliah = dbsession.query(MataKuliah).filter_by(id=matakuliah_id).first()
+    
+    if matakuliah is None:
+        return HTTPNotFound(json_body={'error': 'Matakuliah tidak ditemukan'})
+    
+    return {'matakuliah': matakuliah.to_dict()}
 
-@view_config(route_name='delete_matkul', renderer='json', request_method='DELETE')
-def delete_matkul(request):
-    id = request.matchdict.get('id')
-    matkul = request.dbsession.query(Matakuliah).get(id)
-    if not matkul:
-        return Response(json_body={'error': 'Not found'}, status=404)
-    request.dbsession.delete(matkul)
-    return {'status': 'deleted'}
+
+@view_config(route_name='matakuliah_add', request_method='POST', renderer='json')
+def matakuliah_add(request):
+    """View untuk menambahkan matakuliah baru"""
+    try:
+        json_data = request.json_body
+        required_fields = ['kode_mk', 'nama_mk', 'sks', 'semester']
+        for field in required_fields:
+            if field not in json_data:
+                return HTTPBadRequest(json_body={'error': f'Field {field} wajib diisi'})
+        
+        matakuliah = MataKuliah(
+            kode_mk=json_data['kode_mk'],
+            nama_mk=json_data['nama_mk'],
+            sks=int(json_data['sks']),
+            semester=int(json_data['semester']),
+        )
+        
+        dbsession = request.dbsession
+        dbsession.add(matakuliah)
+        dbsession.flush()
+        
+        return {'success': True, 'matakuliah': matakuliah.to_dict()}
+        
+    except Exception as e:
+        return HTTPBadRequest(json_body={'error': str(e)})
+
+
+@view_config(route_name='matakuliah_update', request_method='PUT', renderer='json')
+def matakuliah_update(request):
+    """View untuk mengupdate data matakuliah"""
+    dbsession = request.dbsession
+    matakuliah_id = request.matchdict['id']
+    matakuliah = dbsession.query(MataKuliah).filter_by(id=matakuliah_id).first()
+    
+    if matakuliah is None:
+        return HTTPNotFound(json_body={'error': 'Matakuliah tidak ditemukan'})
+    
+    try:
+        json_data = request.json_body
+
+        if 'kode_mk' in json_data:
+            matakuliah.kode_mk = json_data['kode_mk']
+        if 'nama_mk' in json_data:
+            matakuliah.nama_mk = json_data['nama_mk']
+        if 'sks' in json_data:
+            matakuliah.sks = int(json_data['sks'])
+        if 'semester' in json_data:
+            matakuliah.semester = int(json_data['semester'])
+
+        return {'success': True, 'matakuliah': matakuliah.to_dict()}
+    
+    except Exception as e:
+        return HTTPBadRequest(json_body={'error': str(e)})
+
+
+@view_config(route_name='matakuliah_delete', request_method='DELETE', renderer='json')
+def matakuliah_delete(request):
+    """View untuk menghapus data matakuliah"""
+    dbsession = request.dbsession
+    matakuliah_id = request.matchdict['id']
+    matakuliah = dbsession.query(MataKuliah).filter_by(id=matakuliah_id).first()
+    
+    if matakuliah is None:
+        return HTTPNotFound(json_body={'error': 'Matakuliah tidak ditemukan'})
+    
+    dbsession.delete(matakuliah)
+    
+    return {'success': True, 'message': f'Matakuliah dengan id {matakuliah_id} berhasil dihapus'}

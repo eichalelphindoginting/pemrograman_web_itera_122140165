@@ -1,6 +1,5 @@
 import argparse
 import sys
-from datetime import date
 
 from pyramid.paster import bootstrap, setup_logging
 from sqlalchemy.exc import OperationalError
@@ -9,20 +8,24 @@ from .. import models
 
 
 def setup_models(dbsession):
-    mk1 = models.Matakuliah(
-        kode_mk='IF101',
-        nama_mk='Pemrograman Dasar',
+    """
+    Add initial model objects.
+    """
+    # Tambahkan data awal untuk Mahasiswa
+    matakuliah1 = models.MataKuliah(
+        kode_mk='CS101',
+        nama_mk='Algoritma dan Pemrograman',
         sks=3,
         semester=1
     )
-    mk2 = models.Matakuliah(
-        kode_mk='IF102',
+    matakuliah2 = models.MataKuliah(
+        kode_mk='CS102',
         nama_mk='Struktur Data',
         sks=3,
         semester=2
     )
-    dbsession.add_all([mk1, mk2])
-
+    dbsession.add(matakuliah1)
+    dbsession.add(matakuliah2)
 
 
 def parse_args(argv):
@@ -45,14 +48,13 @@ def main(argv=sys.argv):
             setup_models(dbsession)
     except OperationalError:
         print('''
-Pyramid is having a problem using your SQL database.
+Pyramid is having a problem using your SQL database.  The problem
+might be caused by one of the following things:
 
-Your database should be up and running before you
-initialize your project. Make sure your database server
-is running and your connection string in development.ini
-is correctly configured.
-''')
+1.  You may need to initialize your database tables with `alembic`.
+    Check your README.txt for description and try to run it.
 
-
-if __name__ == '__main__':
-    main()
+2.  Your database server may not be running.  Check that the
+    database server referred to by the "sqlalchemy.url" setting in
+    your "development.ini" file is running.
+            ''')

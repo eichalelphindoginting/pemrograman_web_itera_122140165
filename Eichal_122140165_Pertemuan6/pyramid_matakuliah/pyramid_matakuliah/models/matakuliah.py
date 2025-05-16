@@ -1,7 +1,14 @@
-from sqlalchemy import Column, Integer, Text
+from sqlalchemy import (
+    Column,
+    Integer,
+    Text,
+)
+
 from .meta import Base
 
-class Matakuliah(Base):
+
+class MataKuliah(Base):
+    """ Model untuk tabel mahasiswa """
     __tablename__ = 'matakuliah'
     id = Column(Integer, primary_key=True)
     kode_mk = Column(Text, unique=True, nullable=False)
@@ -15,5 +22,5 @@ class Matakuliah(Base):
             'kode_mk': self.kode_mk,
             'nama_mk': self.nama_mk,
             'sks': self.sks,
-            'semester': self.semester
+            'semester': self.semester,
         }

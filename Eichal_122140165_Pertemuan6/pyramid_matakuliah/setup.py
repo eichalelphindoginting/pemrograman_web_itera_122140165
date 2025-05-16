@@ -31,7 +31,7 @@ tests_require = [
 setup(
     name='pyramid_matakuliah',
     version='0.0',
-    description='Pyramid_Matakuliah',
+    description='pyramid_matakuliah',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         'Programming Language :: Python',
